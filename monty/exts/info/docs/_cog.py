@@ -422,7 +422,7 @@ class DocCog(commands.Cog, slash_command_attrs={"dm_permission": False}):
         for package in guilds_whitelist:
             for guild_id in package.guilds_whitelist:
                 self.whitelist.setdefault(guild_id, set())
-                self.whitelist[guild_id].add(package["name"])
+                self.whitelist[guild_id].add(package.name)
 
         # delete the cached doc_symbols
         try:
