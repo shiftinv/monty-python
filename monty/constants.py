@@ -224,6 +224,7 @@ class Stats(NamedTuple):
 
 class Tokens(NamedTuple):
     github = environ.get("GITHUB_TOKEN")
+    github_mobile = environ.get("GITHUB_MOBILE_TOKEN")
 
 
 class RedisConfig(NamedTuple):
