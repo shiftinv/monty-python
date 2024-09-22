@@ -623,7 +623,10 @@ class GithubInfo(commands.Cog, name="GitHub Information", slash_command_attrs={"
                 except (TransportError, TransportQueryError):
                     return FetchError(-1, "Issue not found.")
 
-                repository = json_data["organization"]["organizationDiscussionsRepository"]["name"]
+                json_repo = json_data["organization"]["organizationDiscussionsRepository"]
+                if not json_repo:
+                    return FetchError(404, "Issue not found.")
+                repository = json_repo["name"]
 
             try:
                 json_data = await self.gql.execute_async(
