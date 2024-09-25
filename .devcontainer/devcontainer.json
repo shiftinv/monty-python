@@ -1,0 +1,57 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+{
+    "name": "monty",
+
+    // Update the 'dockerComposeFile' list if you have more compose files or use different names.
+    // The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+    "dockerComposeFile": [
+        "../docker-compose.yaml",
+        "docker-compose.yml"
+    ],
+
+    // The 'service' property is the name of the service for the container that VS Code should
+    // use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+    "service": "workspace",
+
+    // The optional 'workspaceFolder' property is the path VS Code should open by default when
+    // connected. This is typically a file mount in .devcontainer/docker-compose.yml
+    "workspaceFolder": "/workspaces/monty-python",
+
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+    // git ssh signing config:
+    // [gpg]
+    //     format = ssh
+    // [gpg "ssh"]
+    //     defaultKeyCommand = ssh-add -L
+    //     allowedSignersFile = /root/.ssh/allowed_signers
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    // "forwardPorts": [],
+
+    "runServices": ["workspace", "postgres", "redis"],
+
+    "postCreateCommand": "poetry install && poetry run pre-commit install --install-hooks",
+
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "python.defaultInterpreterPath": "/workspaces/monty-python/.venv/bin/python",
+                "ruff.importStrategy": "fromEnvironment"
+            },
+            "extensions": [
+				"ms-python.python",
+                "ms-python.vscode-pylance",
+				"charliermarsh.ruff",
+                "Gruntfuggly.todo-tree"
+			]
+        }
+    },
+
+    "remoteUser": "root",
+
+    "overrideCommand": true
+}
